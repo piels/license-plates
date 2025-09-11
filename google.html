@@ -1,5 +1,50 @@
 
 <html>
+  <head>
+  <style>
+
+  #toggle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates a 3-column grid */
+  gap: 1rem; /* Space between grid items */
+  padding: 1rem;
+}
+
+.toggle-btn {
+  display: block;
+}
+
+.toggle-btn input {
+  /* Hides the default checkbox but keeps it accessible */
+  display: none;
+}
+
+.btn-visual {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  background-color: #e0e0e0; /* Inactive button color */
+  color: #333;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.btn-visual:hover {
+  background-color: #d0d0d0; /* Hover state */
+}
+
+/* Style for the 'toggled on' state using the :checked pseudo-class */
+.toggle-btn input:checked + .btn-visual {
+  background-color: #007bff; /* Active button color */
+  color: #fff;
+  border-color: #007bff;
+}
+
+  
+  </style>
+  </head>
     <body>
 <div id="toggle-grid">
   <label class="toggle-btn">
