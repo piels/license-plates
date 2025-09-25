@@ -1,13 +1,23 @@
 <html>
   <head>
+    <title>License Plates!</title>
     <style type = "text/css">
 
-      .gr {
+      .gr5 {
         display: grid;
         grid-template-columns: repeat(5, 1fr); /* Creates a 5-column grid */
         gap: 1rem; /* Space between grid items */
         padding: 1rem;
         font-size: 3vw;
+      }
+
+      .btm {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+        font-size: 3vw;
+        margin-top: 3rem;
       }
 
       .toggle-btn {
@@ -46,7 +56,7 @@
   </head>
   <body>
     <h1>U.S. States</h1>
-    <div class="gr">
+    <div class="gr5">
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">Ala.</span></label>
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">Alaska</span></label>
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">Ariz.</span></label>
@@ -100,7 +110,7 @@
     </div>
 
     <h1>Other U.S. Plates</h1>
-    <div class= "gr">
+    <div class="gr5">
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">D.C.</span></label>
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">A.S.</span></label>
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">Guam</span></label>
@@ -108,8 +118,9 @@
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">P.R.</span></label>
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">V.I.</span></label>
     </div>
+
     <h1>Canada</h1>
-    <div class= "gr">
+    <div class="gr5">
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">Alta.</span></label>
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">B.C.</span></label>
       <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">Man.</span></label>
@@ -126,6 +137,11 @@
 
     </div>
    
+    <div class="btm">
+      <label class="toggle-btn"><input type="checkbox" /><span class="btn-visual">Print</span></label>
+      <label class="toggle-btn"><input type="checkbox" />Reset</label>
+
+    </div>
   </body>
   
 </html>
