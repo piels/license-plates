@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>License Plates!  (Roadtrip edition)</title>
+    <style type = "text/css">
+
+      .gr5 {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* Creates a 5-column grid */
+        gap: 1rem; /* Space between grid items */
+        padding: 1rem;
+        font-size: 3vw;
+      }
+
+      .btm {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+        font-size: 3vw;
+        margin-top: 3rem;
+      }
+
+      .toggle-btn {
+        display: block;
+      }
+
+      .toggle-btn input {
+        /* Hides the default checkbox but keeps it accessible */
+        display: none;
+      }
+
+      .btn-visual {
+        display: block;
+        padding: 0.75rem 1.5rem;
+        background-color: #e0e0e0; /* Inactive button color */
+        color: #333;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: background-color 0.3s ease; /* Smooth color transition */
+      }
+
+      .btn-visual:hover {
+        background-color: #d0d0d0; /* Hover state */
+      }
+
+      /* Style for the 'toggled on' state using the :checked pseudo-class */
+      .toggle-btn input:checked + .btn-visual {
+        background-color: #007bff; /* Active button color */
+        color: #fff;
+        border-color: #007bff;
+      }
+
+      button.warning {
+        background-color: red;
+        color: #fff;
+      }
+
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded',init,false);
+
+      let fData, fdObject;
+
+
+      function init() {
+
+        // add listeners
+        let inputs = document.querySelectorAll("input");
+        inputs.forEach(i => i.addEventListener("input", handleChange, false));
+
+        document.getElementById("resetButton").addEventListener("click", resetButtonFn);
+        document.getElementById("confirmResetButton").addEventListener("click",confirmResetFn);
+        document.getElementById("closeDialogButton").addEventListener("click",closeDialogFn);
+        document.getElementById("printButton").addEventListener("click",() => {window.print();});
+
+        
+        let saved = window.localStorage.getItem('form');
+        if(saved) {
+          //console.log(saved);
+
+          let els = document.forms["plateForm"].elements;
+          let j = JSON.parse(saved);
+          Object.entries(j).forEach(([k,v]) => {
+            switch(els[k].type) {
+              case "checkbox": 
+                if (v="on")  els[k].checked = true;
+                break;
+              default: 
+                els[k].value = v;
+            }
+
+          })
+        } 
+      }
+
+      function handleChange(e) {
+        console.log(e.target.name);
+        fData = new FormData(document.forms["plateForm"]);
+        fdObject = Object.fromEntries(fData.entries());
+        window.localStorage.setItem("form",JSON.stringify(fdObject));
+      }
+
+      function resetButtonFn(e) {
+        console.log(e.target.id);
+        document.getElementById("resetcheck").showModal();
+      }
+
+      function confirmResetFn(e) {
+        console.log(e.target.id);
+        document.forms["plateForm"].reset();
+        window.localStorage.removeItem("form");
+        document.getElementById("resetcheck").close();
+      }
+
+      function closeDialogFn(e) {
+        console.log(e.target.id);
+        document.getElementById("resetcheck").close();
+      }
+
+      
+
+
+    </script>
+  </head>
+  <body>
+    <form name="plateForm" id="plateForm">
+      <header>
+        <h1>License Plates!</h1>
+    <!--  <div class="btm">
+        <button onclick="window.print()">Print</button>
+        <button>Reset</button>
+      </div> -->
+        <input type="Text" placeholder="placeholder text" name="subtitle"/>
+        <button id="printButton" type="button">Print</button>
+        <button id="resetButton" type="button" class="warning">Reset</button>
+
+      </header>
+      <section id="states">
+        <h2>U.S. States</h2>
+
+        <div class="gr5">
+          <label class="toggle-btn"><input type="checkbox" name="AL" /><span class="btn-visual">Ala.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="AK" /><span class="btn-visual">Alaska</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="AZ" /><span class="btn-visual">Ariz.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="AR" /><span class="btn-visual">Ark.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="CA" /><span class="btn-visual">Calif.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="CO" /><span class="btn-visual">Colo.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="CT" /><span class="btn-visual">Conn.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="DE" /><span class="btn-visual">Del.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="FL" /><span class="btn-visual">Fla.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="GA" /><span class="btn-visual">Ga.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="HI" /><span class="btn-visual">Hawaii</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="ID" /><span class="btn-visual">Idaho</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="IL" /><span class="btn-visual">Ill.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="IN" /><span class="btn-visual">Ind.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="IA" /><span class="btn-visual">Iowa</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="KS" /><span class="btn-visual">Kan.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="KY" /><span class="btn-visual">Ky.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="LA" /><span class="btn-visual">La.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="ME" /><span class="btn-visual">Maine</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MD" /><span class="btn-visual">Md.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MA" /><span class="btn-visual">Mass.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MI" /><span class="btn-visual">Mich.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MN" /><span class="btn-visual">Minn.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MS" /><span class="btn-visual">Miss.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MO" /><span class="btn-visual">Mo.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MT" /><span class="btn-visual">Mont.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NE" /><span class="btn-visual">Neb.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NV" /><span class="btn-visual">Nev.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NH" /><span class="btn-visual">N.H.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NJ" /><span class="btn-visual">N.J.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NM" /><span class="btn-visual">N.M.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NY" /><span class="btn-visual">N.Y.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NC" /><span class="btn-visual">N.C.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="ND" /><span class="btn-visual">N.D.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="OH" /><span class="btn-visual">Ohio</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="OK" /><span class="btn-visual">Okla.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="OR" /><span class="btn-visual">Ore.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="PA" /><span class="btn-visual">Pa.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="RI" /><span class="btn-visual">R.I.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="SC" /><span class="btn-visual">S.C.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="SD" /><span class="btn-visual">S.D.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="TN" /><span class="btn-visual">Tenn.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="TX" /><span class="btn-visual">Texas</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="UT" /><span class="btn-visual">Utah</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="VT" /><span class="btn-visual">Vt.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="VA" /><span class="btn-visual">Va.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="WA" /><span class="btn-visual">Wash.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="WV" /><span class="btn-visual">W.Va.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="WI" /><span class="btn-visual">Wis.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="WY" /><span class="btn-visual">Wyo.</span></label>
+        </div>
+      </section>
+      
+      <section id="us-other">
+        <h2>Other U.S. Plates</h2>
+        <div class="gr5">
+          <label class="toggle-btn"><input type="checkbox" name="DC" /><span class="btn-visual">D.C.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="AS" /><span class="btn-visual">A.S.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="GU" /><span class="btn-visual">Guam</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MP" /><span class="btn-visual">M.P.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="PR" /><span class="btn-visual">P.R.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="VI" /><span class="btn-visual">V.I.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="USG" /><span class="btn-visual">U.S. Gov.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="OFM" /><span class="btn-visual">Dipl.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NativeAmerican" /><span class="btn-visual">Native</span></label>
+        </div>
+      </section>
+
+      <section id="canada">
+        <h2>Canada</h2>
+        <div class="gr5">
+          <label class="toggle-btn"><input type="checkbox" name="AB" /><span class="btn-visual">Alta.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="BC" /><span class="btn-visual">B.C.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="MB" /><span class="btn-visual">Man.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NB" /><span class="btn-visual">N.B.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NL" /><span class="btn-visual">N.L.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NT" /><span class="btn-visual">N.W.T.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NS" /><span class="btn-visual">N.S.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="NU" /><span class="btn-visual">Nvt.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="ON" /><span class="btn-visual">Ont.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="PE" /><span class="btn-visual">P.E.I.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="QC" /><span class="btn-visual">Que.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="SK" /><span class="btn-visual">Sask.</span></label>
+          <label class="toggle-btn"><input type="checkbox" name="YK" /><span class="btn-visual">Yuk.</span></label>
+
+        </div>
+      </section>   
+      
+    </form>
+    <dialog id="resetcheck">
+      Reset the page?
+      <button type="button" id="confirmResetButton" class="warning">Reset</button>
+      <button type="button" id="closeDialogButton">Cancel</button>
+    </dialog>
+  </body>
+  
+</html>
